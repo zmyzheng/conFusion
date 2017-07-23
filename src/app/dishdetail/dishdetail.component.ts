@@ -32,7 +32,7 @@ export class DishdetailComponent implements OnInit {
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
 
     this.route.params
-      .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
+      .switchMap((params: Params) => this.dishservice.getDish(+params['id']))  //监测params的变化
       .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
   }
 
