@@ -21,6 +21,8 @@ export class DishdetailComponent implements OnInit {
   prev: number;
   next: number;
 
+  errMess: string;
+
   constructor(private dishservice: DishService,
               private route: ActivatedRoute,
               private location: Location,
@@ -30,11 +32,13 @@ export class DishdetailComponent implements OnInit {
     // let id = +this.route.snapshot.params['id'];
     // this.dishservice.getDish(id)
     //   .subscribe(dish => this.dish = dish);
-    this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
+    this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds,
+      errmess => this.errMess = <any>errmess);
 
     this.route.params
       .switchMap((params: Params) => this.dishservice.getDish(+params['id']))  //监测params的变化
-      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
+        errmess => this.errMess = <any>errmess);
   }
 
   setPrevNext(dishId: number) {
